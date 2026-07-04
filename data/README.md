@@ -5,7 +5,8 @@ All datasets used by VIGOR live under this single `data/` directory. Paths in
 place the files exactly as shown below (the actual data is not tracked in git).
 
 ## Expected layout
-
+Refer to [Talk2car](https://github.com/talk2car/Talk2Car) for images.
+Other files are uploaded in Google Drive: [data](https://drive.google.com/drive/folders/1ks2U6RTq7CGKr8DGUJW-OzcTGSsPaXIs?usp=drive_link)
 ```
 data/
 └── talk2car/
