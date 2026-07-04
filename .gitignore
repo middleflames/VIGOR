@@ -1,2 +1,12 @@
 *.pdf
 *.PDF
+
+# Data — keep the layout docs, ignore the actual data
+data/*
+!data/README.md
+!data/.gitkeep
+
+# Training artifacts
+output/
+__pycache__/
+*.pyc

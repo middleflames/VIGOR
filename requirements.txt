@@ -1,0 +1,23 @@
+# VIGOR — talk2car visual grounding. Tested with Python 3.9 on CUDA 11.8.
+#
+# Install a torch/torchvision build matching your CUDA. The pins below are the
+# tested cu118 versions (installed via the PyTorch cu118 index):
+#   pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu118
+torch==2.1.2
+torchvision==0.16.2
+
+transformers==4.12.5
+timm==0.4.9
+einops==0.7.0
+spacy==3.0.0
+spacy-alignments==0.9.1
+opencv-python==4.8.0.76
+scikit-image==0.22.0
+matplotlib==3.5.2
+tqdm==4.66.1
+numpy==1.26.4
+ruamel.yaml==0.17.40
+Pillow==9.3.0
+
+# After installing, download the spaCy English model used for POS-tag reasoning:
+#   python -m spacy download en_core_web_sm

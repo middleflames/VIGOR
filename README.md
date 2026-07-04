@@ -6,8 +6,55 @@ Official materials for the ICRA 2026 paper:
 
 ## Overview
 
-VIGOR studies visual grounding for human-to-vehicle commands. This repository folder will collect the paper presentation materials, citation information, and future project resources.
+VIGOR studies visual grounding for human-to-vehicle commands. This repository provides the reference implementation (model, training and evaluation code) alongside the paper presentation materials and citation information.
 
+## Repository Structure
+
+```
+run.py                   # single-node launcher (wraps torch.distributed.launch)
+train.py                 # train / evaluate entry point (XVLM_POSLIDAR)
+configs/
+  vigor_talk2car.yaml    # experiment config; all data paths rooted at ./data
+  config_swinB_384.json  # Swin-B vision-encoder config
+  config_bert.json       # BERT text-encoder config
+models/                  # VIGOR model (XVLM_POSLIDAR) + X-VLM backbone
+dataset/                 # talk2car + LiDAR grounding dataset and evaluation
+utils/, refTools/        # metrics, distributed helpers, REFER API
+data/                    # datasets go here (see data/README.md)
+```
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+```
+
+Tested with Python 3.9 and CUDA 11.8. Place the datasets under `data/` following [`data/README.md`](data/README.md).
+
+## Usage
+
+The simplest entry point is the `run.py` launcher (single node, one or more GPUs):
+
+```bash
+# Evaluate a trained checkpoint on GPU 0
+python run.py --checkpoint /path/to/checkpoint_best.pth \
+    --output_dir output/vigor --gpus 0 --evaluate
+
+# Train on GPUs 0,1,2, fine-tuning from the X-VLM bbox pre-trained checkpoint
+python run.py --checkpoint /path/to/xvlm_pretrained.pth \
+    --output_dir output/vigor --gpus 0,1,2 --load_bbox_pretrain
+```
+
+`run.py` forwards to `train.py` through `torch.distributed.launch`; call `train.py`
+directly for full control:
+
+```bash
+python -m torch.distributed.launch --nproc_per_node=1 --use_env train.py \
+    --config configs/vigor_talk2car.yaml \
+    --checkpoint /path/to/checkpoint_best.pth \
+    --output_dir output/vigor --evaluate
+```
 
 ## Figures
 ### Figure 1: System Overview
@@ -21,7 +68,7 @@ VIGOR studies visual grounding for human-to-vehicle commands. This repository fo
 
 
 ## TODO List
-
+- [x] Model Update (2026-Jul-4)
 - [x] Initial Repo
 
 

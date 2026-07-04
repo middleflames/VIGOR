@@ -1,0 +1,33 @@
+# ============================================================
+#  VIGOR — talk2car visual grounding
+#  Model: XVLM_POSLIDAR_NODEFORM (image + text + LiDAR, POS reasoning)
+# ------------------------------------------------------------
+#  All dataset paths are rooted at ./data — see data/README.md
+#  for the expected directory layout.
+# ============================================================
+
+## Data (unified under ./data)
+image_root:         'data/talk2car/images/'                
+talk2car_key:       'data/talk2car/talk2car_key.pt'        
+lidar_feature_base: 'data/talk2car/lidar_features/train'  
+refcoco_data:       'data/'                                
+
+## Vision Encoder
+vision_config: 'configs/config_swinB_384.json'
+use_clip_vit: False
+use_swin: True
+image_res: 384
+patch_size: 32
+hflip_mode: 3
+
+## Text Encoder
+use_roberta: False
+text_config: 'configs/config_bert.json'
+text_encoder: 'bert-base-uncased'
+
+## Training
+batch_size: 16
+max_tokens: 40
+
+optimizer: {opt: adamW, lr: 3e-5, weight_decay: 0.01, lr_mult: 2}
+schedular: {sched: linear, lr: 3e-5, epochs: 120, num_warmup_steps: 0.1}
